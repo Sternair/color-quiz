@@ -28,9 +28,21 @@ class QuizState extends State<Quiz> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Text(
-              '$_points Points',
-              style: TextStyle(color: Colors.white),
+            Container(
+              margin: EdgeInsets.only(left: 5, right: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Round $_round',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    '$_points Points',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
             ),
             Expanded(child: _getQuizWidgetForStage())
           ],
