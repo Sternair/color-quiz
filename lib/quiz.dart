@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:color_quiz/constants.dart';
 import 'package:color_quiz/utils/get_high_contrast_BW.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -9,13 +10,14 @@ class Quiz extends StatefulWidget {
   State<StatefulWidget> createState() => QuizState();
 }
 
-enum Stage { SHOW_TARGET_COLOR, SHOW_COLOR_PICKER, SHOW_SOLUTION }
+enum Stage { SHOW_TARGET_COLOR, SHOW_COLOR_PICKER, SHOW_SOLUTION, GAME_OVER }
 
 class QuizState extends State<Quiz> {
   Color _targetColor;
   Color _selectedColor = Color.fromRGBO(15, 15, 15, 1.0);
 
   int _points = 0;
+  int _round = 1;
 
   Stage _stage = Stage.SHOW_TARGET_COLOR;
 
@@ -30,12 +32,7 @@ class QuizState extends State<Quiz> {
               '$_points Points',
               style: TextStyle(color: Colors.white),
             ),
-            if (_stage == Stage.SHOW_TARGET_COLOR)
-              ..._getShowTargetColorStateWidgets()
-            else if (_stage == Stage.SHOW_COLOR_PICKER)
-              ..._getShowColorPickerStateWidgets()
-            else if (_stage == Stage.SHOW_SOLUTION)
-              ..._getShowSoultionStateWidgets()
+            Expanded(child: _getQuizWidgetForStage())
           ],
         ),
       ),
@@ -44,34 +41,48 @@ class QuizState extends State<Quiz> {
 
   void initState() {
     super.initState();
-    _setNewColors();
+    _setNewTargetColor();
   }
 
-  List<Widget> _getShowTargetColorStateWidgets() {
-    return [
-      Expanded(
-        child: new Container(
-          color: _targetColor,
-        ),
-      ),
-      Center(
-        child: RaisedButton(
-          child: Text(
-            'Make a guess',
+  Widget _getQuizWidgetForStage() {
+    if (_stage == Stage.SHOW_TARGET_COLOR)
+      return _getShowTargetColorStateWidgets();
+    else if (_stage == Stage.SHOW_COLOR_PICKER)
+      return _getShowColorPickerStateWidgets();
+    else if (_stage == Stage.SHOW_SOLUTION)
+      return _getShowSoultionStateWidgets();
+    else if (_stage == Stage.GAME_OVER)
+      return _getGameOverStateWidgets();
+    else
+      return null;
+  }
+
+  Widget _getShowTargetColorStateWidgets() {
+    return Container(
+      color: _targetColor,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Center(
+            child: RaisedButton(
+              child: Text(
+                'Make a guess',
+              ),
+              onPressed: _onMakeGuessPressed,
+            ),
           ),
-          onPressed: _onMakeGuessPressed,
-        ),
+        ],
       ),
-    ];
+    );
   }
 
-  List<Widget> _getShowColorPickerStateWidgets() {
-    return [
-      Expanded(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
-          color: _selectedColor,
-          child: ColorPicker(
+  Widget _getShowColorPickerStateWidgets() {
+    return Container(
+      color: _selectedColor,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          ColorPicker(
             enableAlpha: false,
             enableLabel: false,
             paletteType: PaletteType.hsv,
@@ -81,54 +92,83 @@ class QuizState extends State<Quiz> {
                 _selectedColor = selectedColor;
               });
             },
-            pickerAreaHeightPercent: 0.8,
+            pickerAreaHeightPercent: 1.0,
           ),
-        ),
+          RaisedButton(
+            child: Text(
+              'Submit',
+            ),
+            onPressed: _onSubmitPressed,
+          ),
+        ],
       ),
-      RaisedButton(
-        child: Text(
-          'Submit',
-        ),
-        onPressed: _onSubmitPressed,
-      ),
-    ];
+    );
   }
 
-  List<Widget> _getShowSoultionStateWidgets() {
-    return [
-      Expanded(
-        child: Container(
-          color: _targetColor,
-          child: Center(
-            child: Text(
-              'Target Color\nR: ${_targetColor.red}, G: ${_targetColor.green}, B: ${_targetColor.blue}',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: getHighContrastBW(_targetColor)),
-            ),
-          ),
-        ),
-      ),
-      Expanded(
-        child: Container(
-          color: _selectedColor,
-          child: Center(
-            child: Text(
-              'You won ${calculatePoints(_targetColor, _selectedColor)} Points\nYour Guess\nR: ${_selectedColor.red}, G: ${_selectedColor.green}, B: ${_selectedColor.blue}',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: getHighContrastBW(_selectedColor),
+  Widget _getShowSoultionStateWidgets() {
+    return Container(
+      color: _selectedColor,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              color: _targetColor,
+              child: Center(
+                child: Text(
+                  'Target Color\nR: ${_targetColor.red}, G: ${_targetColor.green}, B: ${_targetColor.blue}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: getHighContrastBW(_targetColor)),
+                ),
               ),
             ),
           ),
+          Expanded(
+            child: Container(
+              color: _selectedColor,
+              child: Center(
+                child: Text(
+                  'You won ${calculatePoints(_targetColor, _selectedColor)} Points\nYour Guess\nR: ${_selectedColor.red}, G: ${_selectedColor.green}, B: ${_selectedColor.blue}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: getHighContrastBW(_selectedColor),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          RaisedButton(
+            child: Text(
+              'Continue',
+            ),
+            onPressed: _onContinuePressed,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getGameOverStateWidgets() {
+    return Container(
+      color: _selectedColor,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Well done!\nYou got $_points Points!',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: getHighContrastBW(_selectedColor)),
+            ),
+            RaisedButton(
+              child: Text(
+                'Try Again!',
+              ),
+              onPressed: _onTryAgainPressed,
+            ),
+          ],
         ),
       ),
-      RaisedButton(
-        child: Text(
-          'Continue',
-        ),
-        onPressed: _onContinuePressed,
-      ),
-    ];
+    );
   }
 
   void _onMakeGuessPressed() {
@@ -145,16 +185,32 @@ class QuizState extends State<Quiz> {
     });
   }
 
-  void _setNewColors() {
+  void _onContinuePressed() {
+    if (_round < ROUNDS) {
+      _round++;
+      _setNewTargetColor();
+      setState(() {
+        _stage = Stage.SHOW_TARGET_COLOR;
+      });
+    } else {
+      setState(() {
+        _stage = Stage.GAME_OVER;
+      });
+    }
+  }
+
+  void _setNewTargetColor() {
     setState(() {
       _targetColor = Color.fromRGBO(new Random().nextInt(255),
           new Random().nextInt(255), new Random().nextInt(255), 1.0);
     });
   }
 
-  void _onContinuePressed() {
-    _setNewColors();
+  void _onTryAgainPressed() {
+    _setNewTargetColor();
     setState(() {
+      _points = 0;
+      _round = 1;
       _stage = Stage.SHOW_TARGET_COLOR;
     });
   }
