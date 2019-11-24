@@ -1,16 +1,23 @@
-import 'package:color_quiz/db/connector.dart';
+import 'package:color_quiz/db/DBProvider.dart';
 import 'package:color_quiz/quiz.dart';
 import 'package:flutter/material.dart';
 
 import 'db/entities/score.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => HomeState();
+}
+
+class HomeState extends State<Home> {
+  Future<List<Score>> scoreList = DBProvider.db.getAllScoresSorted();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
-          future: DBProvider.db.getAllScoresSorted(),
+          future: scoreList,
           builder: (BuildContext context, AsyncSnapshot<List<Score>> snapshot) {
             if (snapshot.hasData) {
               return Column(
@@ -40,7 +47,9 @@ class Home extends StatelessWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute<void>(
                             builder: (BuildContext context) {
-                              return Quiz();
+                              return Quiz(
+                                refreshData: () => _refreshData(),
+                              );
                             },
                           ),
                         );
@@ -56,5 +65,9 @@ class Home extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _refreshData() {
+    scoreList = DBProvider.db.getAllScoresSorted();
   }
 }

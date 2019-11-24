@@ -1,11 +1,19 @@
 import 'dart:math';
 
 import 'package:color_quiz/constants.dart';
+import 'package:color_quiz/db/DBProvider.dart';
+import 'package:color_quiz/db/entities/score.dart';
 import 'package:color_quiz/utils/get_high_contrast_BW.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+import 'widgets/TextInput.dart';
+
 class Quiz extends StatefulWidget {
+  final refreshData;
+
+  const Quiz({Key key, this.refreshData}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => QuizState();
 }
@@ -160,6 +168,7 @@ class QuizState extends State<Quiz> {
   }
 
   Widget _getGameOverStateWidgets() {
+    String nameInput = DEFAULT_NAME;
     return Container(
       color: _selectedColor,
       child: Center(
@@ -171,11 +180,15 @@ class QuizState extends State<Quiz> {
               textAlign: TextAlign.center,
               style: TextStyle(color: getHighContrastBW(_selectedColor)),
             ),
+            TextInputForm(
+              backgroundColor: getHighContrastBW(_selectedColor),
+              onTextChanged: (newText) => nameInput = newText,
+            ),
             RaisedButton(
               child: Text(
                 'Try Again!',
               ),
-              onPressed: _onTryAgainPressed,
+              onPressed: () => _onTryAgainPressed(nameInput),
             ),
           ],
         ),
@@ -218,8 +231,10 @@ class QuizState extends State<Quiz> {
     });
   }
 
-  void _onTryAgainPressed() {
+  void _onTryAgainPressed(String name) async {
     _setNewTargetColor();
+    await DBProvider.db.insertScore(new Score(name: name, points: _points));
+    widget.refreshData();
     setState(() {
       _points = 0;
       _round = 1;
