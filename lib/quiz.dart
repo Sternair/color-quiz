@@ -3,11 +3,12 @@ import 'dart:math';
 import 'package:color_quiz/constants.dart';
 import 'package:color_quiz/db/DBProvider.dart';
 import 'package:color_quiz/db/entities/score.dart';
-import 'package:color_quiz/utils/get_high_contrast_BW.dart';
+import 'package:color_quiz/quiz/ColorPickerStateWidget.dart';
+import 'package:color_quiz/quiz/GameOverStateWidget.dart';
+import 'package:color_quiz/quiz/SolutionStateWidget.dart';
+import 'package:color_quiz/quiz/TargetColorStateWidget.dart';
+import 'package:color_quiz/quiz/calculatePoints.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-
-import 'widgets/TextInput.dart';
 
 class Quiz extends StatefulWidget {
   final refreshData;
@@ -52,7 +53,7 @@ class QuizState extends State<Quiz> {
                 ],
               ),
             ),
-            Expanded(child: _getQuizWidgetForStage())
+            Expanded(child: _getQuizWidgetForStage(context))
           ],
         ),
       ),
@@ -64,136 +65,26 @@ class QuizState extends State<Quiz> {
     _setNewTargetColor();
   }
 
-  Widget _getQuizWidgetForStage() {
+  void _onColorChanged(Color newSelectedColor) {
+    setState(() {
+      _selectedColor = newSelectedColor;
+    });
+  }
+
+  Widget _getQuizWidgetForStage(BuildContext context) {
     if (_stage == Stage.SHOW_TARGET_COLOR)
-      return _getShowTargetColorStateWidgets();
+      return getShowTargetColorStateWidget(_targetColor, _onMakeGuessPressed);
     else if (_stage == Stage.SHOW_COLOR_PICKER)
-      return _getShowColorPickerStateWidgets();
+      return getShowColorPickerStateWidget(
+          _selectedColor, _onColorChanged, _onSubmitPressed);
     else if (_stage == Stage.SHOW_SOLUTION)
-      return _getShowSoultionStateWidgets();
+      return getShowSoultionStateWidget(_selectedColor, _targetColor,
+          calculatePoints(_selectedColor, _targetColor), _onContinuePressed);
     else if (_stage == Stage.GAME_OVER)
-      return _getGameOverStateWidgets();
+      return getGameOverStateWidget(
+          context, _selectedColor, _points, _onSavePressed);
     else
       return null;
-  }
-
-  Widget _getShowTargetColorStateWidgets() {
-    return Container(
-      color: _targetColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Center(
-            child: RaisedButton(
-              child: Text(
-                'Make a guess',
-              ),
-              onPressed: _onMakeGuessPressed,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _getShowColorPickerStateWidgets() {
-    return Container(
-      color: _selectedColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          ColorPicker(
-            enableAlpha: false,
-            enableLabel: false,
-            paletteType: PaletteType.hsv,
-            pickerColor: _selectedColor,
-            onColorChanged: (Color selectedColor) {
-              setState(() {
-                _selectedColor = selectedColor;
-              });
-            },
-            pickerAreaHeightPercent: 1.0,
-          ),
-          RaisedButton(
-            child: Text(
-              'Submit',
-            ),
-            onPressed: _onSubmitPressed,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _getShowSoultionStateWidgets() {
-    return Container(
-      color: _selectedColor,
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              color: _targetColor,
-              child: Center(
-                child: Text(
-                  'Target Color\nR: ${_targetColor.red}, G: ${_targetColor.green}, B: ${_targetColor.blue}',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: getHighContrastBW(_targetColor)),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: _selectedColor,
-              child: Center(
-                child: Text(
-                  'You won ${calculatePoints(_targetColor, _selectedColor)} Points\nYour Guess\nR: ${_selectedColor.red}, G: ${_selectedColor.green}, B: ${_selectedColor.blue}',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: getHighContrastBW(_selectedColor),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          RaisedButton(
-            child: Text(
-              'Continue',
-            ),
-            onPressed: _onContinuePressed,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _getGameOverStateWidgets() {
-    String nameInput = DEFAULT_NAME;
-    return Container(
-      color: _selectedColor,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Well done!\nYou got $_points Points!',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: getHighContrastBW(_selectedColor)),
-            ),
-            TextInputForm(
-              backgroundColor: getHighContrastBW(_selectedColor),
-              onTextChanged: (newText) => nameInput = newText,
-            ),
-            RaisedButton(
-              child: Text(
-                'Try Again!',
-              ),
-              onPressed: () => _onTryAgainPressed(nameInput),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   void _onMakeGuessPressed() {
@@ -231,23 +122,10 @@ class QuizState extends State<Quiz> {
     });
   }
 
-  void _onTryAgainPressed(String name) async {
+  void _onSavePressed(String name, BuildContext context) async {
     _setNewTargetColor();
     await DBProvider.db.insertScore(new Score(name: name, points: _points));
     widget.refreshData();
-    setState(() {
-      _points = 0;
-      _round = 1;
-      _stage = Stage.SHOW_TARGET_COLOR;
-    });
+    Navigator.pop(context);
   }
-}
-
-int calculatePoints(Color targetColor, Color selectedColor) {
-  int points = 500 -
-      ((targetColor.red - selectedColor.red).abs() +
-              (targetColor.green - selectedColor.green).abs() +
-              (targetColor.blue - selectedColor.blue).abs()) *
-          2;
-  return points > 0 ? points : 0;
 }
