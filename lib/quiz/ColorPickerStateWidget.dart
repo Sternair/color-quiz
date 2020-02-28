@@ -1,3 +1,5 @@
+import 'package:color_quiz/utils/get_high_contrast_BW.dart';
+import 'package:color_quiz/widgets/DefaultButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -16,11 +18,10 @@ Widget getShowColorPickerStateWidget(
           onColorChanged: onColorChanged,
           pickerAreaHeightPercent: 1.0,
         ),
-        RaisedButton(
-          child: Text(
-            'Submit',
-          ),
+        DefaultButton(
+          label: 'Submit',
           onPressed: onSubmitPressed,
+          color: getHighContrastBW(selectedColor),
         ),
       ],
     ),

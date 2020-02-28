@@ -1,7 +1,7 @@
 import 'package:color_quiz/theme.dart';
 import 'package:flutter/material.dart';
 
-import 'db/entities/score.dart';
+import '../db/entities/score.dart';
 
 Widget getHighScore(List<Score> data) {
   return FractionallySizedBox(

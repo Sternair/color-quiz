@@ -1,3 +1,5 @@
+import 'package:color_quiz/utils/get_high_contrast_BW.dart';
+import 'package:color_quiz/widgets/DefaultButton.dart';
 import 'package:flutter/material.dart';
 
 Widget getShowTargetColorStateWidget(
@@ -8,11 +10,10 @@ Widget getShowTargetColorStateWidget(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Center(
-          child: RaisedButton(
-            child: Text(
-              'Make a guess',
-            ),
+          child: DefaultButton(
+            label: 'Make a guess',
             onPressed: onMakeGuessPressed,
+            color: getHighContrastBW(targetColor),
           ),
         ),
       ],

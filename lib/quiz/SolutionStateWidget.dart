@@ -1,4 +1,5 @@
 import 'package:color_quiz/utils/get_high_contrast_BW.dart';
+import 'package:color_quiz/widgets/DefaultButton.dart';
 import 'package:flutter/material.dart';
 
 Widget getShowSoultionStateWidget(Color selectedColor, Color targetColor,
@@ -33,11 +34,10 @@ Widget getShowSoultionStateWidget(Color selectedColor, Color targetColor,
             ),
           ),
         ),
-        RaisedButton(
-          child: Text(
-            'Continue',
-          ),
+        DefaultButton(
+          label: 'Continue',
           onPressed: onContinuePressed,
+          color: getHighContrastBW(selectedColor),
         ),
       ],
     ),

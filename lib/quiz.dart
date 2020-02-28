@@ -23,7 +23,7 @@ enum Stage { SHOW_TARGET_COLOR, SHOW_COLOR_PICKER, SHOW_SOLUTION, GAME_OVER }
 
 class QuizState extends State<Quiz> {
   Color _targetColor;
-  Color _selectedColor = Color.fromRGBO(15, 15, 15, 1.0);
+  Color _selectedColor = Color.fromRGBO(80, 10, 5, 1.0);
 
   int _points = 0;
   int _round = 1;
@@ -126,6 +126,6 @@ class QuizState extends State<Quiz> {
     _setNewTargetColor();
     await DBProvider.db.insertScore(new Score(name: name, points: _points));
     widget.refreshData();
-    Navigator.pop(context);
+    Navigator.popAndPushNamed(context, '/highscore');
   }
 }
