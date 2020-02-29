@@ -1,5 +1,5 @@
-import 'package:color_quiz/highscore.dart';
-import 'package:color_quiz/home.dart';
+import 'package:color_quiz/widgets/highscore/HighScore.dart';
+import 'package:color_quiz/widgets/home/Home.dart';
 import 'package:flutter/material.dart';
 
 class ColorQuizApp extends StatelessWidget {

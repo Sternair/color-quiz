@@ -1,11 +1,11 @@
 import 'package:color_quiz/db/DBProvider.dart';
-import 'package:color_quiz/quiz.dart';
 import 'package:color_quiz/theme.dart';
-import 'package:color_quiz/widgets/DefaultButton.dart';
-import 'package:color_quiz/widgets/HighScore.dart';
+import 'package:color_quiz/widgets/common/DefaultButton.dart';
+import 'package:color_quiz/widgets/highscore/HighScoreList.dart';
+import 'package:color_quiz/widgets/quiz/Quiz.dart';
 import 'package:flutter/material.dart';
 
-import 'db/entities/score.dart';
+import '../../db/entities/score.dart';
 
 class HighScore extends StatefulWidget {
   @override

@@ -1,5 +1,5 @@
-import 'package:color_quiz/utils/get_high_contrast_BW.dart';
-import 'package:color_quiz/widgets/DefaultButton.dart';
+import 'package:color_quiz/utils/getHighContrastBW.dart';
+import 'package:color_quiz/widgets/common/DefaultButton.dart';
 import 'package:flutter/material.dart';
 
 Widget getShowTargetColorStateWidget(

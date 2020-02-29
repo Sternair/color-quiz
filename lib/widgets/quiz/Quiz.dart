@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:color_quiz/constants.dart';
 import 'package:color_quiz/db/DBProvider.dart';
 import 'package:color_quiz/db/entities/score.dart';
-import 'package:color_quiz/quiz/ColorPickerStateWidget.dart';
-import 'package:color_quiz/quiz/GameOverStateWidget.dart';
-import 'package:color_quiz/quiz/SolutionStateWidget.dart';
-import 'package:color_quiz/quiz/TargetColorStateWidget.dart';
-import 'package:color_quiz/quiz/calculatePoints.dart';
+import 'package:color_quiz/widgets/quiz/ColorPickerStateWidget.dart';
+import 'package:color_quiz/widgets/quiz/GameOverStateWidget.dart';
+import 'package:color_quiz/widgets/quiz/SolutionStateWidget.dart';
+import 'package:color_quiz/widgets/quiz/TargetColorStateWidget.dart';
+import 'package:color_quiz/widgets/quiz/calculatePoints.dart';
 import 'package:flutter/material.dart';
 
 class Quiz extends StatefulWidget {

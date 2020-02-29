@@ -1,7 +1,7 @@
-import 'package:color_quiz/highscore.dart';
-import 'package:color_quiz/quiz.dart';
 import 'package:color_quiz/theme.dart';
-import 'package:color_quiz/widgets/DefaultButton.dart';
+import 'package:color_quiz/widgets/common/DefaultButton.dart';
+import 'package:color_quiz/widgets/highscore/HighScore.dart';
+import 'package:color_quiz/widgets/quiz/Quiz.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {

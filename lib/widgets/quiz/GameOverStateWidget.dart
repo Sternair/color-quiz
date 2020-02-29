@@ -1,9 +1,9 @@
-import 'package:color_quiz/utils/get_high_contrast_BW.dart';
-import 'package:color_quiz/widgets/DefaultButton.dart';
-import 'package:color_quiz/widgets/TextInput.dart';
+import 'package:color_quiz/utils/getHighContrastBW.dart';
+import 'package:color_quiz/widgets/common/DefaultButton.dart';
+import 'package:color_quiz/widgets/common/TextInput.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
 Widget getGameOverStateWidget(BuildContext context, Color selectedColor,
     int totalPoints, Function onSavePressed) {

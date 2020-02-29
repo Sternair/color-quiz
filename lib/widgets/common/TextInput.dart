@@ -1,5 +1,5 @@
 import 'package:color_quiz/constants.dart';
-import 'package:color_quiz/utils/get_high_contrast_BW.dart';
+import 'package:color_quiz/utils/getHighContrastBW.dart';
 import 'package:flutter/material.dart';
 
 class TextInputForm extends StatefulWidget {
