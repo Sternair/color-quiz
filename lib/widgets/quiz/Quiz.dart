@@ -45,7 +45,7 @@ class QuizState extends State<Quiz> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Round $_round',
+                    'Round $_round/$ROUNDS',
                     style: TextStyle(color: Colors.white),
                   ),
                   Text(
