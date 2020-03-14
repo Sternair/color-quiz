@@ -25,11 +25,13 @@ class ColorService {
         .skip(1)
         .map((rawRow) {
       List row = rawRow.split(';');
-      return new QColor(
-          name: row[0],
-          r: int.parse(row[2]),
-          g: int.parse(row[3]),
-          b: int.parse(row[4]));
+      return new QColor(name: row[0], hex: row[1]);
+    }).where((QColor color) {
+      var r = color.toColor().red;
+      return color.toColor().computeLuminance() > 0.1 &&
+          color.toColor().computeLuminance() < 0.9 &&
+          ((color.toColor().green - r).abs() > 35 ||
+              (color.toColor().blue - r).abs() > 35);
     }).toList();
 
     _instance = new ColorService(list);
@@ -46,5 +48,10 @@ class ColorService {
   QColor getCurrentColor() {
     developer.log('Returning current color ' + _currentColor.name);
     return _currentColor;
+  }
+
+  List<QColor> getColors() {
+    developer.log('Returning all ${_colors.length} colors');
+    return _colors;
   }
 }

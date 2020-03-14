@@ -15,7 +15,7 @@ Widget getShowSoultionStateWidget(Color selectedColor, QColor targetColor,
             color: targetColor.toColor(),
             child: Center(
               child: Text(
-                'Target Color\n\n${targetColor.name}\n(R: ${targetColor.r}, G: ${targetColor.g}, B: ${targetColor.b})',
+                'Target Color\n\n${targetColor.name}\n(R: ${targetColor.toColor().red}, G: ${targetColor.toColor().green}, B: ${targetColor.toColor().blue})',
                 textAlign: TextAlign.center,
                 style:
                     TextStyle(color: getHighContrastBW(targetColor.toColor())),

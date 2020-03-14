@@ -2,17 +2,20 @@ import 'package:flutter/cupertino.dart';
 
 class QColor {
   final String name;
-  final int r;
-  final int g;
-  final int b;
+  final String hex;
+  Color _color;
 
-  QColor(
-      {@required this.name,
-      @required this.r,
-      @required this.g,
-      @required this.b});
+  /// hex value with '#'
+  QColor({@required this.name, @required this.hex}) {
+    this._color = Color.fromRGBO(hexToInt(hex.substring(1, 3)),
+        hexToInt(hex.substring(3, 5)), hexToInt(hex.substring(5, 7)), 1);
+  }
 
   Color toColor() {
-    return Color.fromRGBO(this.r, this.g, this.b, 1.0);
+    return _color;
   }
+}
+
+int hexToInt(String hex) {
+  return int.parse(hex, radix: 16);
 }
