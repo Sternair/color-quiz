@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:developer' as developer;
 import 'dart:math';
 
 import 'package:color_quiz/QColor.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class ColorService {
   static ColorService _instance;
@@ -13,16 +14,17 @@ class ColorService {
   ColorService(this._colors);
 
   static Future<ColorService> getInstance() async {
+    developer.log('ColorService init ...');
     if (_instance != null) {
       return _instance;
     }
-    var stream = File('assets/colors/colors.csv').openRead();
-    var list = await stream
-        .transform(utf8.decoder)
+    var list = await rootBundle
+        .loadString('assets/colors/colors.csv')
+        .asStream()
         .transform(const LineSplitter())
         .skip(1)
-        .map((line) {
-      List row = line.split(';');
+        .map((rawRow) {
+      List row = rawRow.split(';');
       return new QColor(
           name: row[0],
           r: int.parse(row[2]),
@@ -31,6 +33,7 @@ class ColorService {
     }).toList();
 
     _instance = new ColorService(list);
+    developer.log('ColorService initiated');
     return _instance;
   }
 
@@ -41,7 +44,7 @@ class ColorService {
   }
 
   QColor getCurrentColor() {
-    print('Returning current color ' + _currentColor.name);
+    developer.log('Returning current color ' + _currentColor.name);
     return _currentColor;
   }
 }

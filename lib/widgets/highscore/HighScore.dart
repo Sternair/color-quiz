@@ -2,7 +2,7 @@ import 'package:color_quiz/db/DBProvider.dart';
 import 'package:color_quiz/theme.dart';
 import 'package:color_quiz/widgets/common/DefaultButton.dart';
 import 'package:color_quiz/widgets/highscore/HighScoreList.dart';
-import 'package:color_quiz/widgets/quiz/Quiz.dart';
+import 'package:color_quiz/widgets/quiz/QuizContainer.dart';
 import 'package:flutter/material.dart';
 
 import '../../db/entities/score.dart';
@@ -36,7 +36,7 @@ class HighScoreState extends State<HighScore> {
                         Navigator.of(context).push(
                           MaterialPageRoute<void>(
                             builder: (BuildContext context) {
-                              return Quiz(
+                              return QuizContainer(
                                 refreshData: () => _refreshData(),
                               );
                             },

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:color_quiz/ColorService.dart';
 import 'package:color_quiz/constants.dart';
 import 'package:color_quiz/db/DBProvider.dart';
 import 'package:color_quiz/db/entities/score.dart';
@@ -11,9 +12,11 @@ import 'package:color_quiz/widgets/quiz/calculatePoints.dart';
 import 'package:flutter/material.dart';
 
 class Quiz extends StatefulWidget {
+  final ColorService colorService;
   final refreshData;
 
-  const Quiz({Key key, this.refreshData}) : super(key: key);
+  const Quiz({Key key, this.refreshData, @required this.colorService})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => QuizState();
@@ -60,6 +63,7 @@ class QuizState extends State<Quiz> {
     );
   }
 
+  @override
   void initState() {
     super.initState();
     _setNewTargetColor();

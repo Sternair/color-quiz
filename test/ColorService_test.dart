@@ -2,7 +2,9 @@ import 'package:color_quiz/ColorService.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('should return color', () async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  test('should get new color and set as current', () async {
     final colorService = await ColorService.getInstance();
 
     final newColor = colorService.getNewColor();

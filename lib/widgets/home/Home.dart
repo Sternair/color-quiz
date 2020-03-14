@@ -1,7 +1,7 @@
 import 'package:color_quiz/theme.dart';
 import 'package:color_quiz/widgets/common/DefaultButton.dart';
 import 'package:color_quiz/widgets/highscore/HighScore.dart';
-import 'package:color_quiz/widgets/quiz/Quiz.dart';
+import 'package:color_quiz/widgets/quiz/QuizContainer.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) {
-                                return Quiz(
+                                return QuizContainer(
                                   refreshData: () => {},
                                 );
                               },
