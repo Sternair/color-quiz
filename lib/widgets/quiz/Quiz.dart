@@ -76,7 +76,9 @@ class QuizState extends State<Quiz> {
 
   Widget _getQuizWidgetForStage(BuildContext context) {
     if (_stage == Stage.SHOW_TARGET_COLOR)
-      return getShowTargetColorStateWidget(_targetColor, _onMakeGuessPressed);
+      return TargetColorWidget(
+          targetColor: _targetColor,
+          continueToNextStage: this._onContinueToNextStage);
     else if (_stage == Stage.SHOW_COLOR_PICKER)
       return getShowColorPickerStateWidget(
           _selectedColor, _onColorChanged, _onSubmitPressed);
@@ -90,7 +92,7 @@ class QuizState extends State<Quiz> {
       return null;
   }
 
-  void _onMakeGuessPressed() {
+  void _onContinueToNextStage() {
     setState(() {
       _stage = Stage.SHOW_COLOR_PICKER;
     });

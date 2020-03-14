@@ -1,3 +1,4 @@
 const ROUNDS = 5;
+const TARGET_COLOR_MEMORIZE_DURATION = 5;
 
 const DEFAULT_NAME = 'John Doe';
