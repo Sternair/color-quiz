@@ -12,39 +12,57 @@ class Home extends StatelessWidget {
         body: SafeArea(
           child: Column(children: [
             Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    DefaultButton(
-                      label: 'Start Quiz',
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) {
-                              return Quiz(
-                                refreshData: () => {},
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    DefaultButton(
-                      label: 'Highscore',
-                      outline: false,
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) {
-                              return HighScore();
-                            },
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                ),
+              child: Row(
+                children: [
+                  Spacer(
+                    flex: 1,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DefaultButton(
+                        label: 'Start Quiz',
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                                return Quiz(
+                                  refreshData: () => {},
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      DefaultButton(
+                        label: 'Highscore',
+                        outline: false,
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                                return HighScore();
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      /*Container(
+                        child: AutoSizeText(
+                          'A really long String',
+                          style: TextStyle(fontSize: 30, color: COLOR_WHITE),
+                          minFontSize: 10,
+                          maxFontSize: 40,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),*/
+                    ],
+                  ),
+                  Spacer(
+                    flex: 1,
+                  ),
+                ],
               ),
             ),
           ]),
