@@ -1,11 +1,12 @@
+import 'package:color_quiz/QColor.dart';
 import 'package:color_quiz/utils/getHighContrastBW.dart';
 import 'package:color_quiz/widgets/common/DefaultButton.dart';
 import 'package:flutter/material.dart';
 
 Widget getShowTargetColorStateWidget(
-    Color targetColor, Function onMakeGuessPressed) {
+    QColor targetColor, Function onMakeGuessPressed) {
   return Container(
-    color: targetColor,
+    color: targetColor.toColor(),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -13,7 +14,7 @@ Widget getShowTargetColorStateWidget(
           child: DefaultButton(
             label: 'Make a guess',
             onPressed: onMakeGuessPressed,
-            color: getHighContrastBW(targetColor),
+            color: getHighContrastBW(targetColor.toColor()),
           ),
         ),
       ],

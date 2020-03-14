@@ -11,4 +11,8 @@ class QColor {
       @required this.r,
       @required this.g,
       @required this.b});
+
+  Color toColor() {
+    return Color.fromRGBO(this.r, this.g, this.b, 1.0);
+  }
 }

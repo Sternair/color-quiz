@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:color_quiz/ColorService.dart';
+import 'package:color_quiz/QColor.dart';
 import 'package:color_quiz/constants.dart';
 import 'package:color_quiz/db/DBProvider.dart';
 import 'package:color_quiz/db/entities/score.dart';
@@ -25,7 +24,7 @@ class Quiz extends StatefulWidget {
 enum Stage { SHOW_TARGET_COLOR, SHOW_COLOR_PICKER, SHOW_SOLUTION, GAME_OVER }
 
 class QuizState extends State<Quiz> {
-  Color _targetColor;
+  QColor _targetColor;
   Color _selectedColor = Color.fromRGBO(80, 10, 5, 1.0);
 
   int _points = 0;
@@ -83,7 +82,7 @@ class QuizState extends State<Quiz> {
           _selectedColor, _onColorChanged, _onSubmitPressed);
     else if (_stage == Stage.SHOW_SOLUTION)
       return getShowSoultionStateWidget(_selectedColor, _targetColor,
-          calculatePoints(_selectedColor, _targetColor), _onContinuePressed);
+          calculatePoints(_targetColor, _selectedColor), _onContinuePressed);
     else if (_stage == Stage.GAME_OVER)
       return getGameOverStateWidget(
           context, _selectedColor, _points, _onSavePressed);
@@ -121,8 +120,7 @@ class QuizState extends State<Quiz> {
 
   void _setNewTargetColor() {
     setState(() {
-      _targetColor = Color.fromRGBO(new Random().nextInt(255),
-          new Random().nextInt(255), new Random().nextInt(255), 1.0);
+      _targetColor = widget.colorService.getNewColor();
     });
   }
 

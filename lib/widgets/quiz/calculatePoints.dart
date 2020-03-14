@@ -1,10 +1,11 @@
+import 'package:color_quiz/QColor.dart';
 import 'package:flutter/material.dart';
 
-int calculatePoints(Color targetColor, Color selectedColor) {
+int calculatePoints(QColor targetColor, Color selectedColor) {
   int points = 500 -
-      ((targetColor.red - selectedColor.red).abs() +
-              (targetColor.green - selectedColor.green).abs() +
-              (targetColor.blue - selectedColor.blue).abs()) *
+      ((targetColor.r - selectedColor.red).abs() +
+              (targetColor.g - selectedColor.green).abs() +
+              (targetColor.b - selectedColor.blue).abs()) *
           2;
   return points > 0 ? points : 0;
 }

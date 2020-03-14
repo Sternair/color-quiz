@@ -14,10 +14,10 @@ class ColorService {
   ColorService(this._colors);
 
   static Future<ColorService> getInstance() async {
-    developer.log('ColorService init ...');
     if (_instance != null) {
       return _instance;
     }
+    developer.log('ColorService init ...');
     var list = await rootBundle
         .loadString('assets/colors/colors.csv')
         .asStream()
