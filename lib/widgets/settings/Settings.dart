@@ -19,6 +19,13 @@ class Settings extends StatelessWidget {
                     Navigator.pushNamed(context, '/settings/color-overview'),
               ),
             ),
+            Card(
+              child: ListTile(
+                title: Text('Scoring Inspector'),
+                onTap: () =>
+                    Navigator.pushNamed(context, '/settings/scoring-inspector'),
+              ),
+            ),
           ],
         ));
   }

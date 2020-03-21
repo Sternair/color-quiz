@@ -2,6 +2,7 @@ import 'package:color_quiz/theme.dart';
 import 'package:color_quiz/widgets/highscore/HighScore.dart';
 import 'package:color_quiz/widgets/home/Home.dart';
 import 'package:color_quiz/widgets/settings/ColorOverview.dart';
+import 'package:color_quiz/widgets/settings/ScoringInspector.dart';
 import 'package:color_quiz/widgets/settings/Settings.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class ColorQuizApp extends StatelessWidget {
         '/highscore': (context) => HighScore(),
         '/settings': (context) => Settings(),
         '/settings/color-overview': (context) => ColorOverview(),
+        '/settings/scoring-inspector': (context) => ScoringInspector(),
       },
       theme: ThemeData(
         brightness: Brightness.dark,
