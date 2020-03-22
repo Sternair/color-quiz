@@ -5,6 +5,8 @@ import 'package:color_quiz/widgets/quiz/calculatePoints.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+import '../quiz/calculatePoints.dart';
+
 class ScoringInspector extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => ScoringInspectorState();
@@ -26,8 +28,7 @@ class ScoringInspectorState extends State<ScoringInspector> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          _selectedColor == SelectedColor.color1 ? _color1 : _color2,
+      backgroundColor: this._getSelectedColor(),
       appBar: AppBar(
         title: Text('Scoring Inspector'),
       ),
@@ -37,17 +38,15 @@ class ScoringInspectorState extends State<ScoringInspector> {
             enableAlpha: false,
             enableLabel: false,
             paletteType: PaletteType.hsv,
-            pickerColor:
-                _selectedColor == SelectedColor.color1 ? _color1 : _color2,
+            pickerColor: this._getSelectedColor(),
             onColorChanged: onColorChanged,
             pickerAreaHeightPercent: 0.8,
           ),
           Text(
-            '${calculatePoints(QColor(name: 'custom', hex: '#${_color1.value.toRadixString(16).substring(2)}'), _color2)}',
-            style: TextStyle(
-                color: getHighContrastBW(_selectedColor == SelectedColor.color1
-                    ? _color1
-                    : _color2)),
+            '${calculatePoints(QColor(name: 'custom', hex: '#${_color1.value.toRadixString(16).substring(2)}'), _color2, PointAlgorithm.HSV)}\nH: ${HSVColor.fromColor(this._getSelectedColor()).hue}',
+            style:
+                TextStyle(color: getHighContrastBW(this._getSelectedColor())),
+            textAlign: TextAlign.right,
           ),
           Expanded(
             child: Row(
@@ -100,6 +99,10 @@ class ScoringInspectorState extends State<ScoringInspector> {
         ],
       ),
     );
+  }
+
+  Color _getSelectedColor() {
+    return _selectedColor == SelectedColor.color1 ? _color1 : _color2;
   }
 }
 
