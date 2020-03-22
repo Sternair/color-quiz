@@ -26,7 +26,9 @@ int calculatePoints(QColor target, Color selected,
 int getHSVPoints(HSVColor c1, HSVColor c2) {
   return max(
       MAX_POINTS -
-          _getHSVHueMinusPoints(getAngleDifference(c1.hue, c2.hue)).round(),
+          _getHSVHueMinusPoints(getAngleDifference(c1.hue, c2.hue)).round() -
+          _getHSVSaturationMinusPoints(c1, c2) -
+          _getHSVValueMinusPoints(c1, c2),
       0);
 }
 
@@ -36,6 +38,14 @@ double _getHSVHueMinusPoints(double hueDiff) {
   } else {
     return (hueDiff * MAX_ANGLE_DIFF) - (MAX_POINTS - (MAX_ANGLE_DIFF * 10));
   }
+}
+
+int _getHSVSaturationMinusPoints(HSVColor c1, HSVColor c2) {
+  return ((c1.saturation - c2.saturation).abs() * 100).round();
+}
+
+int _getHSVValueMinusPoints(HSVColor c1, HSVColor c2) {
+  return ((c1.value - c2.value).abs() * 100).round();
 }
 
 double getAngleDifference(double a1, double a2) {
