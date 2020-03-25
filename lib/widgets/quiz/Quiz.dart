@@ -10,6 +10,8 @@ import 'package:color_quiz/widgets/quiz/TargetColorStateWidget.dart';
 import 'package:color_quiz/widgets/quiz/calculatePoints.dart';
 import 'package:flutter/material.dart';
 
+import 'QuizContainer.dart';
+
 class Quiz extends StatefulWidget {
   final ColorService colorService;
   final refreshData;
@@ -52,6 +54,7 @@ class QuizState extends State<Quiz> {
                     '$_points Points',
                     style: TextStyle(color: Colors.white),
                   ),
+                  _getMenu(context),
                 ],
               ),
             ),
@@ -132,4 +135,62 @@ class QuizState extends State<Quiz> {
     widget.refreshData();
     Navigator.popAndPushNamed(context, '/highscore');
   }
+}
+
+enum InGameMenuItemSelection { close, restart, mainMenu }
+
+Widget _getMenu(BuildContext context) {
+  return PopupMenuButton<InGameMenuItemSelection>(
+    icon: Icon(Icons.menu),
+    offset: Offset(0, 100),
+    onSelected: (InGameMenuItemSelection result) {
+      switch (result) {
+        case InGameMenuItemSelection.mainMenu:
+          Navigator.pop(context);
+          break;
+        case InGameMenuItemSelection.restart:
+          Navigator.pop(context);
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) {
+                return QuizContainer(
+                  refreshData: () => {},
+                );
+              },
+            ),
+          );
+          break;
+        case InGameMenuItemSelection.close:
+          break;
+      }
+    },
+    itemBuilder: (BuildContext context) =>
+        <PopupMenuEntry<InGameMenuItemSelection>>[
+      const PopupMenuItem<InGameMenuItemSelection>(
+        value: InGameMenuItemSelection.restart,
+        child: ListTile(
+          leading: Icon(Icons.replay),
+          title: Text('Restart'),
+          contentPadding: EdgeInsets.all(0),
+        ),
+      ),
+      const PopupMenuItem<InGameMenuItemSelection>(
+        value: InGameMenuItemSelection.mainMenu,
+        child: ListTile(
+          leading: Icon(Icons.home),
+          title: Text('Main Menu'),
+          contentPadding: EdgeInsets.symmetric(horizontal: 0),
+        ),
+      ),
+      const PopupMenuDivider(),
+      const PopupMenuItem<InGameMenuItemSelection>(
+        value: InGameMenuItemSelection.close,
+        child: ListTile(
+          leading: Icon(Icons.close),
+          title: Text('Close'),
+          contentPadding: EdgeInsets.symmetric(horizontal: 0),
+        ),
+      ),
+    ],
+  );
 }
