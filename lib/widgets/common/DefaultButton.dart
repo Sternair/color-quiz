@@ -2,28 +2,37 @@ import 'package:flutter/material.dart';
 
 import '../../theme.dart';
 
+enum ButtonType { action, primary, secondary }
+
 class DefaultButton extends StatelessWidget {
   final GestureTapCallback onPressed;
   final String label;
   final Color color;
-  final bool outline;
+  final ButtonType buttonType;
 
   DefaultButton(
       {@required this.onPressed,
       @required this.label,
       this.color = COLOR_WHITE,
-      this.outline = true});
+      this.buttonType = ButtonType.primary});
 
   @override
   Widget build(BuildContext context) {
-    return new OutlineButton(
-        child: Text(label),
+    return ButtonTheme(
+      height: buttonType == ButtonType.action ? 45 : 40,
+      child: OutlineButton(
+        child: Text(
+          label,
+          style: TextStyle(fontSize: buttonType == ButtonType.action ? 28 : 18),
+        ),
         onPressed: onPressed,
         color: this.color,
         textColor: this.color,
-        borderSide: outline
-            ? BorderSide(color: this.color, style: BorderStyle.solid)
+        borderSide: buttonType != ButtonType.secondary
+            ? BorderSide(color: this.color, style: BorderStyle.solid, width: 2)
             : null,
-        shape: new StadiumBorder());
+        shape: new StadiumBorder(),
+      ),
+    );
   }
 }

@@ -23,6 +23,7 @@ class Home extends StatelessWidget {
                     children: [
                       DefaultButton(
                         label: 'Start Quiz',
+                        buttonType: ButtonType.action,
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
@@ -37,7 +38,7 @@ class Home extends StatelessWidget {
                       ),
                       DefaultButton(
                         label: 'Highscore',
-                        outline: false,
+                        buttonType: ButtonType.secondary,
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
@@ -50,7 +51,7 @@ class Home extends StatelessWidget {
                       ),
                       DefaultButton(
                         label: 'Settings',
-                        outline: false,
+                        buttonType: ButtonType.secondary,
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
@@ -61,16 +62,6 @@ class Home extends StatelessWidget {
                           );
                         },
                       ),
-                      /*Container(
-                        child: AutoSizeText(
-                          'A really long String',
-                          style: TextStyle(fontSize: 30, color: COLOR_WHITE),
-                          minFontSize: 10,
-                          maxFontSize: 40,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),*/
                     ],
                   ),
                   Spacer(

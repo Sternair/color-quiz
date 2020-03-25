@@ -23,6 +23,8 @@ class ColorQuizApp extends StatelessWidget {
         primaryColor: COLOR_BLACK,
         focusColor: COLOR_WHITE,
         hoverColor: COLOR_WHITE,
+        fontFamily: 'Quinngothic',
+        textTheme: TextTheme(body1: TextStyle(fontSize: 20)),
       ),
     );
   }
