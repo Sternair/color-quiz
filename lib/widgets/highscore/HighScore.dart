@@ -19,6 +19,9 @@ class HighScoreState extends State<HighScore> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: COLOR_BLACK,
+      appBar: AppBar(
+        title: Text('Highscore'),
+      ),
       body: SafeArea(
         child: FutureBuilder(
           future: scoreList,

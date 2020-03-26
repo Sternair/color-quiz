@@ -14,7 +14,7 @@ class ScoringInspector extends StatefulWidget {
 
 class ScoringInspectorState extends State<ScoringInspector> {
   SelectedColor _selectedColor = SelectedColor.color1;
-  Color _color1 = Color.fromRGBO(100, 50, 50, 1);
+  Color _color1 = Color.fromRGBO(50, 100, 50, 1);
   Color _color2 = Color.fromRGBO(50, 100, 50, 1);
 
   void onColorChanged(Color color) {
@@ -43,7 +43,7 @@ class ScoringInspectorState extends State<ScoringInspector> {
             pickerAreaHeightPercent: 0.8,
           ),
           Text(
-            '${calculatePoints(QColor(name: 'custom', hex: '#${_color1.value.toRadixString(16).substring(2)}'), _color2, PointAlgorithm.HSV)}\nH: ${HSVColor.fromColor(this._getSelectedColor()).hue}',
+            'Points: ${calculatePoints(QColor(name: 'custom', hex: '#${_color1.value.toRadixString(16).substring(2)}'), _color2, PointAlgorithm.HSV)}',
             style:
                 TextStyle(color: getHighContrastBW(this._getSelectedColor())),
             textAlign: TextAlign.right,

@@ -1,12 +1,13 @@
-import 'package:color_quiz/constants.dart';
 import 'package:color_quiz/utils/getHighContrastBW.dart';
 import 'package:flutter/material.dart';
 
 class TextInputForm extends StatefulWidget {
   final Color backgroundColor;
   final onTextChanged;
+  final String initText;
 
-  const TextInputForm({Key key, this.backgroundColor, this.onTextChanged})
+  const TextInputForm(
+      {Key key, this.backgroundColor, this.onTextChanged, this.initText})
       : super(key: key);
 
   @override
@@ -19,7 +20,7 @@ class _TextInputFormState extends State<TextInputForm> {
   @override
   void initState() {
     super.initState();
-    textEditingController.text = DEFAULT_NAME;
+    textEditingController.text = widget.initText;
   }
 
   @override

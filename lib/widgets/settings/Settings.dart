@@ -16,17 +16,10 @@ class SettingsState extends State<Settings> {
     return Scaffold(
       backgroundColor: COLOR_BLACK,
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text('Info & Settings'),
       ),
       body: ListView(
         children: <Widget>[
-          Card(
-            child: SwitchListTile(
-              title: Text('Show HSV details'),
-              value: _showHSVDetails,
-              onChanged: _changeShowHSVDetails,
-            ),
-          ),
           Card(
             child: ListTile(
               title: Text('Color Overview'),
@@ -39,6 +32,17 @@ class SettingsState extends State<Settings> {
               title: Text('Scoring Inspector'),
               onTap: () =>
                   Navigator.pushNamed(context, '/settings/scoring-inspector'),
+            ),
+          ),
+          Card(
+            child: SwitchListTile(
+              title: Text('Show HSV details'),
+              subtitle: Text(
+                'Shows details about the colors on the solution screen. For people not familiar with HSV probably useless ;)',
+                style: TextStyle(fontSize: 12),
+              ),
+              value: _showHSVDetails,
+              onChanged: _changeShowHSVDetails,
             ),
           ),
         ],

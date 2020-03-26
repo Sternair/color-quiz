@@ -48,30 +48,6 @@ class TargetColorWidgetState extends State<TargetColorWidget>
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> mainChildren = [
-      AnimatedBuilder(
-        animation: controller,
-        builder: (context, child) {
-          return Text(
-            timerString,
-            style: TextStyle(
-              color: getHighContrastBW(widget.targetColor.toColor()),
-              fontSize: 40.0,
-            ),
-          );
-        },
-      ),
-    ];
-    if (widget.currentRound == 1) {
-      mainChildren.add(
-        Text(
-          'Memorize the color!',
-          style: TextStyle(
-            color: getHighContrastBW(widget.targetColor.toColor()),
-          ),
-        ),
-      );
-    }
     return Container(
         color: widget.targetColor.toColor(),
         padding: EdgeInsets.only(bottom: QUIZ_BOTTOM_PADDING),
@@ -80,7 +56,29 @@ class TargetColorWidgetState extends State<TargetColorWidget>
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: mainChildren,
+                children: [
+                  if (widget.currentRound == 1)
+                    Text(
+                      'Memorize this color!',
+                      style: TextStyle(
+                        color: getHighContrastBW(widget.targetColor.toColor()),
+                        fontSize: 24,
+                      ),
+                    ),
+                  AnimatedBuilder(
+                    animation: controller,
+                    builder: (context, child) {
+                      return Text(
+                        timerString,
+                        style: TextStyle(
+                          color:
+                              getHighContrastBW(widget.targetColor.toColor()),
+                          fontSize: 40.0,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
             Center(

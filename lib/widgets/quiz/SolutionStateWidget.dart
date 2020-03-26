@@ -3,11 +3,17 @@ import 'package:color_quiz/widgets/common/DefaultButton.dart';
 import 'package:flutter/material.dart';
 
 import '../../QColor.dart';
+import '../../constants.dart';
 import '../../theme.dart';
 import '../../utils/getHighContrastBW.dart';
 
-Widget getShowSoultionStateWidget(Color selectedColor, QColor targetColor,
-    int pointsWon, Function onContinuePressed, bool showHSVDetails) {
+Widget getShowSoultionStateWidget(
+    Color selectedColor,
+    QColor targetColor,
+    int pointsWon,
+    Function onContinuePressed,
+    bool showHSVDetails,
+    int currentRound) {
   Text _getTableText(String label) {
     return Text(
       label,
@@ -107,7 +113,7 @@ Widget getShowSoultionStateWidget(Color selectedColor, QColor targetColor,
               child: Container(),
             ),
             DefaultButton(
-              label: 'Continue',
+              label: currentRound == ROUNDS ? 'Finish Game' : 'Next Round',
               onPressed: onContinuePressed,
               color: getHighContrastBW(selectedColor),
             ),

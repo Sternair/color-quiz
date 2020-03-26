@@ -50,7 +50,7 @@ class Home extends StatelessWidget {
                         },
                       ),
                       DefaultButton(
-                        label: 'Settings',
+                        label: 'Info & Settings',
                         buttonType: ButtonType.secondary,
                         onPressed: () {
                           Navigator.of(context).push(

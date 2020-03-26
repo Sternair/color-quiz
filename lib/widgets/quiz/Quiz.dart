@@ -11,6 +11,7 @@ import 'package:color_quiz/widgets/quiz/calculatePoints.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'GameOverStateWidget.dart';
 import 'QuizContainer.dart';
 
 class Quiz extends StatefulWidget {
@@ -100,10 +101,14 @@ class QuizState extends State<Quiz> {
           _targetColor,
           calculatePoints(_targetColor, _selectedColor),
           _onContinuePressed,
-          _showHSVDetails);
+          _showHSVDetails,
+          _round);
     else if (_stage == Stage.GAME_OVER)
-      return getGameOverStateWidget(
-          context, _selectedColor, _points, _onSavePressed);
+      return GameOverWidget(
+          context: context,
+          selectedColor: _selectedColor,
+          totalPoints: _points,
+          onSavePressed: _onSavePressed);
     else
       return null;
   }
