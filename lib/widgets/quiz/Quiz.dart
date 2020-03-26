@@ -152,7 +152,7 @@ class QuizState extends State<Quiz> {
   void _loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _showHSVDetails = prefs.getBool('showHSVDetails');
+      _showHSVDetails = prefs.getBool('showHSVDetails') ?? false;
     });
   }
 }
