@@ -9,6 +9,7 @@ import 'package:color_quiz/widgets/quiz/SolutionStateWidget.dart';
 import 'package:color_quiz/widgets/quiz/TargetColorStateWidget.dart';
 import 'package:color_quiz/widgets/quiz/calculatePoints.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'QuizContainer.dart';
 
@@ -27,12 +28,14 @@ enum Stage { SHOW_TARGET_COLOR, SHOW_COLOR_PICKER, SHOW_SOLUTION, GAME_OVER }
 
 class QuizState extends State<Quiz> {
   QColor _targetColor;
-  Color _selectedColor = Color.fromRGBO(80, 10, 5, 1.0);
+  Color _selectedColor = Color.fromRGBO(217, 56, 166, 1.0);
 
   int _points = 0;
   int _round = 1;
 
   Stage _stage = Stage.SHOW_TARGET_COLOR;
+
+  bool _showHSVDetails = false;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +75,7 @@ class QuizState extends State<Quiz> {
   void initState() {
     super.initState();
     _setNewTargetColor();
+    _loadSettings();
   }
 
   void _onColorChanged(Color newSelectedColor) {
@@ -91,8 +95,12 @@ class QuizState extends State<Quiz> {
       return getShowColorPickerStateWidget(
           _selectedColor, _onColorChanged, _onSubmitPressed);
     else if (_stage == Stage.SHOW_SOLUTION)
-      return getShowSoultionStateWidget(_selectedColor, _targetColor,
-          calculatePoints(_targetColor, _selectedColor), _onContinuePressed);
+      return getShowSoultionStateWidget(
+          _selectedColor,
+          _targetColor,
+          calculatePoints(_targetColor, _selectedColor),
+          _onContinuePressed,
+          _showHSVDetails);
     else if (_stage == Stage.GAME_OVER)
       return getGameOverStateWidget(
           context, _selectedColor, _points, _onSavePressed);
@@ -139,6 +147,13 @@ class QuizState extends State<Quiz> {
     await DBProvider.db.insertScore(new Score(name: name, points: _points));
     widget.refreshData();
     Navigator.popAndPushNamed(context, '/highscore');
+  }
+
+  void _loadSettings() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _showHSVDetails = prefs.getBool('showHSVDetails');
+    });
   }
 }
 

@@ -7,7 +7,18 @@ import '../../theme.dart';
 import '../../utils/getHighContrastBW.dart';
 
 Widget getShowSoultionStateWidget(Color selectedColor, QColor targetColor,
-    int pointsWon, Function onContinuePressed) {
+    int pointsWon, Function onContinuePressed, bool showHSVDetails) {
+  Text _getTableText(String label) {
+    return Text(
+      label,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: getHighContrastBW(selectedColor),
+        fontSize: 15,
+      ),
+    );
+  }
+
   return Stack(
     children: [
       Container(
@@ -33,47 +44,43 @@ Widget getShowSoultionStateWidget(Color selectedColor, QColor targetColor,
                 child: Center(
                   child: Table(
                     defaultColumnWidth: FixedColumnWidth(50),
-                    children: [
-                      TableRow(
-                        children: [
-                          _getTableText(
-                              'Guess', getHighContrastBW(selectedColor)),
-                          Container(),
-                          _getTableText(
-                              'Target', getHighContrastBW(selectedColor)),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          _getTableText('${selectedColor.red}',
-                              getHighContrastBW(selectedColor)),
-                          _getTableText(
-                              'red', getHighContrastBW(selectedColor)),
-                          _getTableText('${targetColor.toColor().red}',
-                              getHighContrastBW(selectedColor)),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          _getTableText('${selectedColor.green}',
-                              getHighContrastBW(selectedColor)),
-                          _getTableText(
-                              'green', getHighContrastBW(selectedColor)),
-                          _getTableText('${targetColor.toColor().green}',
-                              getHighContrastBW(selectedColor)),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          _getTableText('${selectedColor.blue}',
-                              getHighContrastBW(selectedColor)),
-                          _getTableText(
-                              'blue', getHighContrastBW(selectedColor)),
-                          _getTableText('${targetColor.toColor().blue}',
-                              getHighContrastBW(selectedColor)),
-                        ],
-                      )
-                    ],
+                    children: showHSVDetails
+                        ? [
+                            TableRow(
+                              children: [
+                                _getTableText('Guess'),
+                                Container(),
+                                _getTableText('Target'),
+                              ],
+                            ),
+                            TableRow(
+                              children: [
+                                _getTableText(
+                                    '${HSVColor.fromColor(selectedColor).hue.round()}'),
+                                _getTableText('hue'),
+                                _getTableText('${targetColor.hue.round()}'),
+                              ],
+                            ),
+                            TableRow(
+                              children: [
+                                _getTableText(
+                                    '${HSVColor.fromColor(selectedColor).saturation.toStringAsFixed(2)}'),
+                                _getTableText('sat'),
+                                _getTableText(
+                                    '${targetColor.saturation.toStringAsFixed(2)}'),
+                              ],
+                            ),
+                            TableRow(
+                              children: [
+                                _getTableText(
+                                    '${HSVColor.fromColor(selectedColor).value.toStringAsFixed(2)}'),
+                                _getTableText('value'),
+                                _getTableText(
+                                    '${targetColor.value.toStringAsFixed(2)}'),
+                              ],
+                            )
+                          ]
+                        : [],
                   ),
                 ),
               ),
@@ -108,17 +115,6 @@ Widget getShowSoultionStateWidget(Color selectedColor, QColor targetColor,
         ),
       ),
     ],
-  );
-}
-
-Text _getTableText(String label, Color color) {
-  return Text(
-    label,
-    textAlign: TextAlign.center,
-    style: TextStyle(
-      color: color,
-      fontSize: 15,
-    ),
   );
 }
 
