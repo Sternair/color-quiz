@@ -27,10 +27,10 @@ class DBProvider {
       },
       version: 1,
     );
-    await insertScore(new Score(id: 1, name: 'Paul', points: 4000));
-    await insertScore(new Score(id: 2, name: 'Bob', points: 3000));
-    await insertScore(new Score(id: 3, name: 'Joe', points: 2000));
-    await insertScore(new Score(id: 4, name: 'Ken', points: 1000));
+    await insertScore(new Score(id: 1, name: 'Paul', points: 4500));
+    await insertScore(new Score(id: 2, name: 'Bob', points: 4300));
+    await insertScore(new Score(id: 3, name: 'Joe', points: 4000));
+    await insertScore(new Score(id: 4, name: 'Ken', points: 3800));
   }
 
   Future<void> insertScore(Score scoreEntity) async {
