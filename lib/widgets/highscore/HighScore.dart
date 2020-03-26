@@ -24,28 +24,31 @@ class HighScoreState extends State<HighScore> {
           future: scoreList,
           builder: (BuildContext context, AsyncSnapshot<List<Score>> snapshot) {
             if (snapshot.hasData) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(child: getHighScore(snapshot.data)),
-                  Center(
-                    child: DefaultButton(
-                      label: 'Start Quiz',
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) {
-                              return QuizContainer(
-                                refreshData: () => _refreshData(),
-                              );
-                            },
-                          ),
-                        );
-                      },
+              return Container(
+                padding: EdgeInsets.only(bottom: QUIZ_BOTTOM_PADDING),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(child: getHighScore(snapshot.data)),
+                    Center(
+                      child: DefaultButton(
+                        label: 'Start Quiz',
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                                return QuizContainer(
+                                  refreshData: () => _refreshData(),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             } else {
               return Center(child: CircularProgressIndicator());
