@@ -92,17 +92,20 @@ Widget getShowSoultionStateWidget(Color selectedColor, QColor targetColor,
           ),
         ],
       ),
-      Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(),
-          ),
-          DefaultButton(
-            label: 'Continue',
-            onPressed: onContinuePressed,
-            color: getHighContrastBW(selectedColor),
-          ),
-        ],
+      Container(
+        padding: EdgeInsets.only(bottom: QUIZ_BOTTOM_PADDING),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(),
+            ),
+            DefaultButton(
+              label: 'Continue',
+              onPressed: onContinuePressed,
+              color: getHighContrastBW(selectedColor),
+            ),
+          ],
+        ),
       ),
     ],
   );

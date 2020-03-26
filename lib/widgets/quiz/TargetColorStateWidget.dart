@@ -3,12 +3,19 @@ import 'package:color_quiz/constants.dart';
 import 'package:color_quiz/utils/getHighContrastBW.dart';
 import 'package:flutter/material.dart';
 
+import '../../theme.dart';
+import '../common/DefaultButton.dart';
+
 class TargetColorWidget extends StatefulWidget {
   final QColor targetColor;
   final continueToNextStage;
+  final int currentRound;
 
   TargetColorWidget(
-      {Key key, @required this.targetColor, @required this.continueToNextStage})
+      {Key key,
+      @required this.targetColor,
+      @required this.continueToNextStage,
+      @required this.currentRound})
       : super(key: key);
 
   @override
@@ -28,7 +35,6 @@ class TargetColorWidgetState extends State<TargetColorWidget>
     );
     controller.reverse(from: 1.0);
     controller.addStatusListener((AnimationStatus status) {
-      print(status);
       if (status == AnimationStatus.dismissed) {
         widget.continueToNextStage();
       }
@@ -42,28 +48,55 @@ class TargetColorWidgetState extends State<TargetColorWidget>
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> mainChildren = [
+      AnimatedBuilder(
+        animation: controller,
+        builder: (context, child) {
+          return Text(
+            timerString,
+            style: TextStyle(
+              color: getHighContrastBW(widget.targetColor.toColor()),
+              fontSize: 40.0,
+            ),
+          );
+        },
+      ),
+    ];
+    if (widget.currentRound == 1) {
+      mainChildren.add(
+        Text(
+          'Memorize the color!',
+          style: TextStyle(
+            color: getHighContrastBW(widget.targetColor.toColor()),
+          ),
+        ),
+      );
+    }
     return Container(
-      color: widget.targetColor.toColor(),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AnimatedBuilder(
-              animation: controller,
-              builder: (context, child) {
-                return Text(
-                  timerString,
-                  style: TextStyle(
+        color: widget.targetColor.toColor(),
+        padding: EdgeInsets.only(bottom: QUIZ_BOTTOM_PADDING),
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: mainChildren,
+              ),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  DefaultButton(
+                    label: 'Continue',
+                    onPressed: () => widget.continueToNextStage(),
                     color: getHighContrastBW(widget.targetColor.toColor()),
-                    fontSize: 40.0,
                   ),
-                );
-              },
+                ],
+              ),
             ),
           ],
-        ),
-      ),
-    );
+        ));
   }
 
   @override

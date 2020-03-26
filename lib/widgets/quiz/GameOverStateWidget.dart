@@ -4,12 +4,13 @@ import 'package:color_quiz/widgets/common/TextInput.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
+import '../../theme.dart';
 
 Widget getGameOverStateWidget(BuildContext context, Color selectedColor,
     int totalPoints, Function onSavePressed) {
   String nameInput = DEFAULT_NAME;
   return Container(
-    padding: EdgeInsets.only(left: 10, right: 10),
+    padding: EdgeInsets.all(QUIZ_BOTTOM_PADDING),
     color: selectedColor,
     child: Column(
       children: [

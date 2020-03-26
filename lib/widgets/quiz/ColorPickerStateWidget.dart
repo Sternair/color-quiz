@@ -3,10 +3,13 @@ import 'package:color_quiz/widgets/common/DefaultButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+import '../../theme.dart';
+
 Widget getShowColorPickerStateWidget(
     Color selectedColor, Function onColorChanged, Function onSubmitPressed) {
   return Container(
     color: selectedColor,
+    padding: EdgeInsets.only(bottom: QUIZ_BOTTOM_PADDING),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[

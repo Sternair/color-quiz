@@ -36,30 +36,33 @@ class QuizState extends State<Quiz> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(15, 15, 15, 1.0),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 5, right: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Round $_round/$ROUNDS',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    '$_points Points',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  _getMenu(context),
-                ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(15, 15, 15, 1.0),
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(left: 5, right: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Round $_round/$ROUNDS',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      '$_points Points',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    _getMenu(context),
+                  ],
+                ),
               ),
-            ),
-            Expanded(child: _getQuizWidgetForStage(context))
-          ],
+              Expanded(child: _getQuizWidgetForStage(context))
+            ],
+          ),
         ),
       ),
     );
@@ -80,8 +83,10 @@ class QuizState extends State<Quiz> {
   Widget _getQuizWidgetForStage(BuildContext context) {
     if (_stage == Stage.SHOW_TARGET_COLOR)
       return TargetColorWidget(
-          targetColor: _targetColor,
-          continueToNextStage: this._onContinueToNextStage);
+        targetColor: _targetColor,
+        continueToNextStage: this._onContinueToNextStage,
+        currentRound: _round,
+      );
     else if (_stage == Stage.SHOW_COLOR_PICKER)
       return getShowColorPickerStateWidget(
           _selectedColor, _onColorChanged, _onSubmitPressed);
