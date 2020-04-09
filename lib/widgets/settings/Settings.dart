@@ -45,6 +45,12 @@ class SettingsState extends State<Settings> {
               onChanged: _changeShowHSVDetails,
             ),
           ),
+          Card(
+            child: ListTile(
+              title: Text('Legal Notice & Privacy Policy'),
+              onTap: () => Navigator.pushNamed(context, '/settings/legal'),
+            ),
+          ),
         ],
       ),
     );

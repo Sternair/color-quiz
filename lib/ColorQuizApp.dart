@@ -2,6 +2,7 @@ import 'package:color_quiz/theme.dart';
 import 'package:color_quiz/widgets/highscore/HighScore.dart';
 import 'package:color_quiz/widgets/home/Home.dart';
 import 'package:color_quiz/widgets/settings/ColorOverview.dart';
+import 'package:color_quiz/widgets/settings/LegalAndImpressum.dart';
 import 'package:color_quiz/widgets/settings/ScoringInspector.dart';
 import 'package:color_quiz/widgets/settings/Settings.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class ColorQuizApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => Home(),
@@ -17,6 +19,7 @@ class ColorQuizApp extends StatelessWidget {
         '/settings': (context) => Settings(),
         '/settings/color-overview': (context) => ColorOverview(),
         '/settings/scoring-inspector': (context) => ScoringInspector(),
+        '/settings/legal': (context) => LegalAndImpressum(),
       },
       theme: ThemeData(
         brightness: Brightness.dark,
