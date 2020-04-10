@@ -6,6 +6,7 @@ import '../../QColor.dart';
 import '../../constants.dart';
 import '../../theme.dart';
 import '../../utils/getHighContrastBW.dart';
+import 'Quiz.i18n.dart';
 
 Widget getShowSoultionStateWidget(
     Color selectedColor,
@@ -36,7 +37,8 @@ Widget getShowSoultionStateWidget(
                 color: targetColor.toColor(),
                 child: Center(
                   child: Text(
-                    'Target Color Name:\n${targetColor.name}',
+                    'Target Color Name'.i18n +
+                        ':\n${targetColor.name.toLowerCase()}',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: getHighContrastBW(targetColor.toColor())),
@@ -54,9 +56,9 @@ Widget getShowSoultionStateWidget(
                         ? [
                             TableRow(
                               children: [
-                                _getTableText('Guess'),
+                                _getTableText('Guess'.i18n),
                                 Container(),
-                                _getTableText('Target'),
+                                _getTableText('Target'.i18n),
                               ],
                             ),
                             TableRow(
@@ -113,7 +115,9 @@ Widget getShowSoultionStateWidget(
               child: Container(),
             ),
             DefaultButton(
-              label: currentRound == ROUNDS ? 'Finish Game' : 'Next Round',
+              label: currentRound == ROUNDS
+                  ? 'Finish Game'.i18n
+                  : 'Next Round'.i18n,
               onPressed: onContinuePressed,
               color: getHighContrastBW(selectedColor),
             ),

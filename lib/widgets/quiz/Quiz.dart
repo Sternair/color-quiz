@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'GameOverStateWidget.dart';
+import 'Quiz.i18n.dart';
 import 'QuizContainer.dart';
 
 class Quiz extends StatefulWidget {
@@ -52,15 +53,29 @@ class QuizState extends State<Quiz> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      'Round $_round/$ROUNDS',
-                      style: TextStyle(color: Colors.white),
+                    Expanded(
+                      child: Container(
+                        child: Text(
+                          'Round'.i18n + ' $_round/$ROUNDS',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
-                    Text(
-                      '$_points Points',
-                      style: TextStyle(color: Colors.white),
+                    Expanded(
+                      child: Container(
+                        child: Text(
+                          '$_points ' + 'Points'.i18n,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
-                    _getMenu(context),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[_getMenu(context)],
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants.dart';
 import '../../theme.dart';
+import 'Quiz.i18n.dart';
 
 class GameOverWidget extends StatefulWidget {
   final BuildContext context;
@@ -37,7 +38,9 @@ class GameOverWidgetState extends State<GameOverWidget> {
                 children: <Widget>[
                   if (_nameInput != null)
                     Text(
-                      'Well done!\nYou got ${widget.totalPoints} Points!',
+                      'Well done'.i18n +
+                          '!\n' +
+                          'You got %d Points'.i18n.fill([widget.totalPoints]),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: getHighContrastBW(widget.selectedColor)),
@@ -57,7 +60,7 @@ class GameOverWidgetState extends State<GameOverWidget> {
             ),
           ),
           DefaultButton(
-            label: 'Save',
+            label: 'Save'.i18n,
             onPressed: onSavePressed,
             color: getHighContrastBW(widget.selectedColor),
           ),

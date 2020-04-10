@@ -6,6 +6,7 @@ import 'package:color_quiz/widgets/quiz/QuizContainer.dart';
 import 'package:flutter/material.dart';
 
 import '../../db/entities/score.dart';
+import 'HighScore.i18n.dart';
 
 class HighScore extends StatefulWidget {
   @override
@@ -35,7 +36,7 @@ class HighScoreState extends State<HighScore> {
                     Expanded(child: getHighScore(snapshot.data)),
                     Center(
                       child: DefaultButton(
-                        label: 'Start Quiz',
+                        label: 'Start Quiz'.i18n,
                         onPressed: () {
                           Navigator.pop(context);
                           Navigator.of(context).push(

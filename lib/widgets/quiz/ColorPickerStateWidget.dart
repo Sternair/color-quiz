@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import '../../theme.dart';
+import 'Quiz.i18n.dart';
 
 Widget getShowColorPickerStateWidget(
     Color selectedColor, Function onColorChanged, Function onSubmitPressed) {
@@ -22,7 +23,7 @@ Widget getShowColorPickerStateWidget(
           pickerAreaHeightPercent: 1.0,
         ),
         DefaultButton(
-          label: 'Submit',
+          label: 'Select'.i18n,
           onPressed: onSubmitPressed,
           color: getHighContrastBW(selectedColor),
         ),

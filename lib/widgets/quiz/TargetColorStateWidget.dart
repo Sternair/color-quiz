@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../theme.dart';
 import '../common/DefaultButton.dart';
+import 'Quiz.i18n.dart';
 
 class TargetColorWidget extends StatefulWidget {
   final QColor targetColor;
@@ -59,7 +60,7 @@ class TargetColorWidgetState extends State<TargetColorWidget>
                 children: [
                   if (widget.currentRound == 1)
                     Text(
-                      'Memorize this color!',
+                      'Memorize this color!'.i18n,
                       style: TextStyle(
                         color: getHighContrastBW(widget.targetColor.toColor()),
                         fontSize: 24,
@@ -86,7 +87,7 @@ class TargetColorWidgetState extends State<TargetColorWidget>
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   DefaultButton(
-                    label: 'Continue',
+                    label: 'Continue'.i18n,
                     onPressed: () => widget.continueToNextStage(),
                     color: getHighContrastBW(widget.targetColor.toColor()),
                   ),

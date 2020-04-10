@@ -5,6 +5,8 @@ import 'package:color_quiz/widgets/quiz/QuizContainer.dart';
 import 'package:color_quiz/widgets/settings/Settings.dart';
 import 'package:flutter/material.dart';
 
+import 'Home.i18n.dart';
+
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class Home extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       DefaultButton(
-                        label: 'Start Quiz',
+                        label: 'Start Quiz'.i18n,
                         buttonType: ButtonType.action,
                         onPressed: () {
                           Navigator.of(context).push(
@@ -50,7 +52,7 @@ class Home extends StatelessWidget {
                         },
                       ),
                       DefaultButton(
-                        label: 'Info & Settings',
+                        label: 'Info & Settings'.i18n,
                         buttonType: ButtonType.secondary,
                         onPressed: () {
                           Navigator.of(context).push(
